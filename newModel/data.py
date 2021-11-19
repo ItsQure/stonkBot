@@ -4,24 +4,16 @@ import csv
 
 key = 'D57064T4IGI17THK'
 ticker = 'FB'
-url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={}&apikey={}'.format(ticker, key)
+url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={}&apikey={}&datatype=csv'.format(ticker, key)
 response = requests.get(url)
+data = response.text
 #print(response.json())
-jsonData = response.json()
-with open('jsonDump.json', 'w') as f:
-    json.dump(jsonData,f)
 
-csvData = jsonData['Time Series (Daily)']
-csvFile = open('fb_daily.csv','w')
+#with open('jsonDump.json', 'w') as jsonFile:
+#    json.dump(jsonData, jsonFile)
+
+#csvData = jsonData['Time Series (Daily)']
+with open('fb_daily.csv','w') as csvfile:
+    csvfile.write(data)
+
 #print(str(csvData))
-"""
-count = 0
-for item in csvData:
-    if count == 0:
-        headers = item.keys()
-        csvFile.writerow(headers)
-        count+=1
-    csvFile.writerow(item.values())
-
-csvFile.close()
-"""
